@@ -103,7 +103,7 @@ defmodule PostProcessing.SymbolicEntityConstructor do
                         to_string(input_data)
                     end
 
-                  patterns = extract_patterns(clean_data, type)
+                  patterns = extract_patterns(input_data, type)
 
                   if Enum.empty?(patterns) do
                     # No patterns found, return empty list
@@ -131,7 +131,7 @@ defmodule PostProcessing.SymbolicEntityConstructor do
                       {chapter_num, summary}, acc when is_binary(summary) ->
                         # Handle case where summary is a string
                         clean_data = Regex.replace(~r/[\n\r\t\s]+/, summary, " ")
-                        patterns = extract_patterns(clean_data, type)
+                        patterns = extract_patterns(summary, type)
 
                         if Enum.empty?(patterns) do
                           # No patterns found, return accumulator unchanged
@@ -158,7 +158,7 @@ defmodule PostProcessing.SymbolicEntityConstructor do
                         # Handle case where data is a map with summary field
                         summary = Map.get(data, "summary") || Map.get(data, :summary) || ""
                         clean_data = Regex.replace(~r/[\n\r\t\s]+/, summary, " ")
-                        patterns = extract_patterns(clean_data, type)
+                        patterns = extract_patterns(summary, type)
 
                         if Enum.empty?(patterns) do
                           # No patterns found, return accumulator unchanged
@@ -210,7 +210,7 @@ defmodule PostProcessing.SymbolicEntityConstructor do
 
                       if is_binary(content) && content != "" do
                         clean_data = Regex.replace(~r/[\n\r\t\s]+/, content, " ")
-                        patterns = extract_patterns(clean_data, type)
+                        patterns = extract_patterns(content, type)
 
                         if Enum.empty?(patterns) do
                           # No patterns found, return accumulator unchanged
@@ -263,7 +263,7 @@ defmodule PostProcessing.SymbolicEntityConstructor do
                   to_string(output_data)
               end
 
-            patterns = extract_patterns(clean_data, type)
+            patterns = extract_patterns(output_data, type)
 
             if Enum.empty?(patterns) do
               # No patterns found, return accumulator unchanged
@@ -549,19 +549,19 @@ defmodule PostProcessing.SymbolicEntityConstructor do
     end
   end
 
-  def create_derivations(date_pattern, type) do
+  def create_derivations(pattern, type) do
     case type do
       :date ->
-        HF.create_date_derivations(date_pattern)
+        HF.create_date_derivations(pattern)
 
       :number ->
-        HF.create_number_derivations(date_pattern)
+        HF.create_number_derivations(pattern)
 
       :identifier ->
-        HF.create_identifier_derivations(date_pattern)
+        HF.create_identifier_derivations(pattern)
 
       :phrase ->
-        HF.create_phrase_derivations(date_pattern)
+        HF.create_phrase_derivations(pattern)
 
       :statement ->
         []
