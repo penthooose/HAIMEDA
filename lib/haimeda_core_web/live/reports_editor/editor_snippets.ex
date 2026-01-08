@@ -933,7 +933,6 @@ defmodule HaimedaCoreWeb.ReportsEditor.EditorSnippets do
     end
   end
 
-  # New component for collapsible metadata sections
   attr(:title, :string, required: true)
   attr(:id, :string, required: true)
   attr(:tab_id, :string, required: true)

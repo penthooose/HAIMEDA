@@ -316,13 +316,11 @@ defmodule HaimedaCoreWeb.ReportsEditor.OutputArea do
                   "version" => 1,
                   "plain_content" => safe_content,
                   "formatted_content" => formatted_content,
-                  # New version starts with empty summary
                   "summary" => "",
                   "type" => ContentPersistence.determine_chapter_type(tab.label),
                   "created_at" => DateTime.utc_now() |> DateTime.to_iso8601()
                 }
 
-                # Add the new version at the beginning
                 final_versions = [new_version] ++ updated_versions
 
                 # Update the database with new versions and set current version to 1

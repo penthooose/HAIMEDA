@@ -9,13 +9,6 @@ defmodule LLMService.PromptBuilder do
 
   @doc """
   Extracts content from a JSON prompt file based on the provided key.
-
-  ## Parameters
-  - prompt_file: Path to the JSON file containing prompts
-  - key: The key to look up in the prompts file
-
-  ## Returns
-  - The content if found, or nil if not found or if an error occurs
   """
   def extract_prompt_element(prompt_file, key) do
     try do
@@ -46,14 +39,6 @@ defmodule LLMService.PromptBuilder do
 
   @doc """
   Constructs a prompt using a template and variables.
-
-  ## Parameters
-  - prompt_file: Path to the JSON file containing prompts
-  - template_key: The key for the template in the prompts file
-  - variables: A map of variables to replace in the template
-
-  ## Returns
-  - The formatted prompt or an error message
   """
   def construct_prompt(prompt_file, template_key, variables \\ %{}) do
     template_content = extract_prompt_element(prompt_file, template_key)
@@ -85,13 +70,8 @@ defmodule LLMService.PromptBuilder do
   @doc """
   Creates a system message.
 
-  ## Parameters
-  - prompt_file: Path to the JSON file containing prompts
-  - system_prompt_key: The key for the system prompt in the prompts file
-  - variables: Optional variables to replace in the system prompt template
-
-  ## Returns
-  - A system message or nil if an error occurs
+  @doc \"""
+  Creates a system message from a prompt template.
   """
   def create_system_message(prompt_file, system_prompt_key, variables \\ %{}) do
     case construct_prompt(prompt_file, system_prompt_key, variables) do
@@ -106,13 +86,8 @@ defmodule LLMService.PromptBuilder do
   @doc """
   Creates a user message.
 
-  ## Parameters
-  - prompt_file: Path to the JSON file containing prompts
-  - user_prompt_key: The key for the user prompt in the prompts file
-  - variables: Optional variables to replace in the user prompt template
-
-  ## Returns
-  - A user message or nil if an error occurs
+  @doc \"""
+  Creates a user message from a prompt template.
   """
   def create_user_message(prompt_file, user_prompt_key, variables \\ %{}) do
     case construct_prompt(prompt_file, user_prompt_key, variables) do

@@ -350,8 +350,6 @@ defmodule HaimedaCore.PerformanceMonitor do
     {:reply, :ok, new_state}
   end
 
-  # Private helper functions
-
   defp generate_tracking_key(module_name, operation_name) do
     timestamp = System.monotonic_time(:microsecond)
     base_key = "#{module_name}#{if operation_name, do: "_#{operation_name}", else: ""}"

@@ -953,7 +953,6 @@ defmodule RIM.QueryProcessor do
         length(date_entities) > 0 && (has_greater_than || has_less_than) ->
           create_single_sided_date_range(date_entities, updated_amount_reps)
 
-        # New case: No representations but we have number or date entities
         length(amount_reps) == 0 && (length(number_entities) > 0 || length(date_entities) > 0) ->
           # Create exact match entities for all number entities
           number_exactmatch =

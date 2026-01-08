@@ -243,8 +243,7 @@ defmodule PostProcessing.HybridVerificationEngine do
       count_missing_entities(checked_number_input_entities, checked_number_output_entities)
 
     {count_input_identifier_entities, count_output_identifier_entities,
-     count_missing_identifier_entities,
-     count_false_identifier_entities} =
+     count_missing_identifier_entities, count_false_identifier_entities} =
       count_missing_entities(
         checked_identifier_input_entities,
         checked_identifier_output_entities
@@ -255,8 +254,7 @@ defmodule PostProcessing.HybridVerificationEngine do
       count_missing_entities(checked_phrase_input_entities, checked_phrase_output_entities)
 
     {count_input_statement_entities, count_output_statement_entities,
-     count_missing_statement_entities,
-     count_false_statement_entities} =
+     count_missing_statement_entities, count_false_statement_entities} =
       count_missing_entities(checked_statement_input_entities, checked_statement_output_entities)
 
     # create map of missing entities for input and output
@@ -401,7 +399,6 @@ defmodule PostProcessing.HybridVerificationEngine do
     {score_total_percent, combined_weighted_score}
   end
 
-  # New helper: direct weighted coverage score (0–10 scale)
   defp calculate_weighted_coverage_score(
          count_missing,
          count_total,

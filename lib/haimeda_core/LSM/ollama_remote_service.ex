@@ -3,15 +3,6 @@ defmodule OllamaRemoteService do
 
   @doc """
   Process a request to a remote Ollama server.
-
-  ## Parameters
-  - ollama_server_url: URL of the remote Ollama server
-  - messages: List of messages to process
-  - model: The model name to use
-  - parameters: Optional map of parameters to override defaults
-
-  ## Returns
-  - The LLM response content or an error message
   """
   def process_request(ollama_server_url, messages, model, parameters \\ %{}) do
     # Validate URL

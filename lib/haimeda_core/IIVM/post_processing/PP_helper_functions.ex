@@ -2,30 +2,30 @@ defmodule PostProcessing.HelperFunctions do
   require Logger
 
   @date_patterns [
-    # --- Most specific: DD. Month YYYY (German) ---
+    # DD. Month YYYY (German)
     ~r/\b(\d{1,2})\.\s+(Januar|Februar|März|April|Mai|Juni|Juli|August|September|Oktober|November|Dezember)\s+(\d{4})(?=[\s.,;:!?]|$)/i,
     ~r/\b(\d{1,2})\.\s+(Jan|Feb|Mär|Apr|Mai|Jun|Jul|Aug|Sep|Okt|Nov|Dez)\s+(\d{4})(?=[\s.,;:!?]|$)/i,
 
-    # --- DD Month YYYY (English) ---
+    # DD Month YYYY (English)
     ~r/\b(\d{1,2})\s+(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{4})(?=[\s.,;:!?]|$)/i,
     ~r/\b(\d{1,2})\s+(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+(\d{4})(?=[\s.,;:!?]|$)/i,
 
-    # --- Numeric formats ---
+    # Numeric formats
     ~r/\b(\d{4})-(\d{1,2})-(\d{1,2})(?=[\s.,;:!?]|$)/,
     ~r/\b(\d{1,2})\/(\d{1,2})\/(\d{4})(?=[\s.,;:!?]|$)/,
     ~r/\b(\d{1,2})\/(\d{1,2})\/(\d{2})(?=[\s.,;:!?]|$)/,
     ~r/\b(\d{1,2})\.(\d{1,2})\.(\d{4})(?=[\s.,;:!?]|$)/,
     ~r/\b(\d{1,2})\.(\d{1,2})\.(\d{2})(?=[\s.,;:!?]|$)/,
 
-    # --- Month YYYY (German) ---
+    # Month YYYY (German)
     ~r/\b(Januar|Februar|März|April|Mai|Juni|Juli|August|September|Oktober|November|Dezember)\s+(\d{4})(?=[\s.,;:!?]|$)/i,
     ~r/\b(Jan|Feb|Mär|Apr|Mai|Jun|Jul|Aug|Sep|Okt|Nov|Dez)\s+(\d{4})(?=[\s.,;:!?]|$)/i,
 
-    # --- Month YYYY (English) ---
+    # Month YYYY (English)
     ~r/\b(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{4})(?=[\s.,;:!?]|$)/i,
     ~r/\b(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+(\d{4})(?=[\s.,;:!?]|$)/i,
 
-    # --- DD. Month (German, no year) ---
+    # DD. Month (German, no year)
     ~r/\b(\d{1,2})\.\s+(Januar|Februar|März|April|Mai|Juni|Juli|August|September|Oktober|November|Dezember)(?=[\s.,;:!?]|$)/i,
     ~r/\b(\d{1,2})\.\s+(Jan|Feb|Mär|Apr|Mai|Jun|Jul|Aug|Sep|Okt|Nov|Dez)(?=[\s.,;:!?]|$)/i
   ]

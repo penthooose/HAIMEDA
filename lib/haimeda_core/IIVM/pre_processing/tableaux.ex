@@ -105,7 +105,6 @@ defmodule PreProcessing.Tableaux do
     {:exists, var, domain, formula}
   end
 
-  # New functions for handling brackets and distributive law
   def bracket(x) do
     {:bracket, x}
   end

@@ -548,8 +548,6 @@ defmodule PostProcessing.OutputCorrectionController do
     end
   end
 
-  # --- new helpers below ---
-
   defp replace_entities_with_placeholders(text, entities) do
     # Sort entities by text length (longest first) to avoid nested replacements
     sorted_entities = Enum.sort_by(entities, fn e -> String.length(e.output_text) end, :desc)

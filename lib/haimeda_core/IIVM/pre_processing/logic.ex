@@ -223,8 +223,7 @@ defmodule PreProcessing.Logic do
       IO.inspect(UniverseState.get_all_sets(), label: "All sets")
     end
 
-    ### check conditions based on the proof order:
-    # generate provable terms for each condition; possibly add functions to trigger (as implications) if condition is satisfied or not
+    # Check conditions based on proof order and generate provable terms
     {terms, parsed_terms, feedback} =
       Enum.reduce(proof_order, {[], [], []}, fn condition_category,
                                                 {outer_terms, outer_parsed, feedback_acc} ->
@@ -243,7 +242,7 @@ defmodule PreProcessing.Logic do
                   cond_id = Map.get(condition, "ID")
 
                   if print_debug do
-                    IO.inspect(cond_id, label: "\n###### Evaluating Condition ID ")
+                    IO.inspect(cond_id, label: "Evaluating Condition ID")
                   end
 
                   # for higher-level conditions, that involve actions on other conditions

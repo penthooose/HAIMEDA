@@ -260,7 +260,6 @@ defmodule HaimedaCoreWeb.ReportsEditor.Editor do
     |> Enum.filter(fn msg -> msg.sender == "user" end)
     |> Enum.map(fn msg -> msg.content end)
     |> Enum.take(20)
-    # Newest messages first
     |> Enum.reverse()
   end
 
@@ -1088,10 +1087,8 @@ defmodule HaimedaCoreWeb.ReportsEditor.Editor do
     {:noreply, socket}
   end
 
-  # New function to clean deleted entities from formatted content structure
   defp clean_formatted_content_entities(%{"content" => content} = formatted_content)
        when is_list(content) do
-    # Clean content by removing deleted entities and processing each block
     cleaned_content = Enum.map(content, &clean_block_content/1)
 
     # Filter out any completely empty paragraph blocks resulting from deletions

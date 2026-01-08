@@ -10,7 +10,6 @@ defmodule PostProcessing.VerificationStateManager do
   use Supervisor
   require Logger
 
-  # 2,5 minutes in milliseconds
   @max_retry_time 15000
   @max_retries 3
 
@@ -81,7 +80,6 @@ defmodule PostProcessing.VerificationStateManager do
   @impl true
   def init([llm_output, max_runs]) do
     children = [
-      # Proper child specification format for Agents
       %{
         id: :entity_registry_agent,
         start:
@@ -99,7 +97,6 @@ defmodule PostProcessing.VerificationStateManager do
           {Agent, :start_link,
            [fn -> init_verification_stats(max_runs) end, [name: :verification_stats_agent]]}
       },
-      # Add a timer manager process
       {Task.Supervisor, name: TimerSupervisor}
     ]
 
@@ -956,12 +953,9 @@ defmodule PostProcessing.VerificationStateManager do
       responses = state.reponses
 
       # Try to find the response for the current run
-      found_response =
-        Enum.find_value(responses, nil, fn response_map ->
-          Map.get(response_map, current_run)
-        end)
-
-      found_response
+      Enum.find_value(responses, nil, fn response_map ->
+        Map.get(response_map, current_run)
+      end)
     end)
   end
 end

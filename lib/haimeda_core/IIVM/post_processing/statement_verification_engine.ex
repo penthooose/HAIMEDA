@@ -945,17 +945,14 @@ defmodule PostProcessing.StatementVerificationEngine do
     apply_operator(value, operator, threshold)
   end
 
-  # Fixed get_metric_value function to handle all metrics correctly
   defp get_metric_value(:tfidf, result), do: result.metrics.tfidf
   defp get_metric_value(:euclidean, result), do: result.metrics.euclidean
   defp get_metric_value(:manhattan, result), do: result.metrics.manhattan
   defp get_metric_value(:domain, result), do: result.metrics.domain
-  # Fix: Directly access the overlap_percent field in the result, not in metrics
   defp get_metric_value(:keyword_overlap, result), do: result.overlap_percent || 0
   defp get_metric_value(:overlap_percent, result), do: result.overlap_percent || 0
   defp get_metric_value(:combined_score, result), do: result.combined_score
-  defp get_metric_value(:confidence, result), do: result.confidence
-  # Add a catch-all to prevent function clause errors
+  defp get_metric_value(:confidence, result), do: result.confidence || 0
   defp get_metric_value(_, _), do: 0
 
   defp apply_operator(value, :>=, threshold), do: value >= threshold

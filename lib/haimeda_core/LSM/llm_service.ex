@@ -40,40 +40,27 @@ defmodule LLMService do
 
   @doc """
   Initialize an Ollama client.
-
-  ## Returns
-  - An initialized Ollama client
   """
   def init_client(ollama_server_url \\ nil) do
     case ollama_server_url do
       nil ->
-        # Use default Ollama server URL
         Ollama.init()
 
       ollama_server_url ->
-        # Initialize with custom Ollama server URL
         Ollama.init(ollama_server_url)
     end
   end
 
   @doc """
   Reset the LLM context by unloading and preloading the model.
-
-  ## Parameters
-  - client: The Ollama client
-  - model: The model name to reset
-
-  ## Returns
-  - :ok if successful, :error if an error occurred
   """
   def reset_llm_context(client, model) do
-    # First try to unload the model
     unload_result = Ollama.unload(client, model: model)
 
     case unload_result do
       {:ok, _response} ->
         IO.puts("Successfully unloaded model: #{model}")
-        # Then preload it again
+
         case Ollama.preload(client, model: model) do
           {:ok, _} ->
             IO.puts("Successfully preloaded model: #{model}")
@@ -86,7 +73,7 @@ defmodule LLMService do
 
       {:error, reason} ->
         IO.puts("Warning: Failed to unload LLM model: #{inspect(reason)}")
-        # Try to preload anyway
+
         case Ollama.preload(client, model: model) do
           {:ok, _} ->
             IO.puts("Successfully preloaded model: #{model}")
@@ -102,14 +89,8 @@ defmodule LLMService do
   @doc """
   Process a request with an LLM.
 
-  ## Parameters
-  - client: The Ollama client
-  - message_set: List of messages to process
-  - model: The model name to use
-  - parameters: Optional map of parameters to override defaults
-
-  ## Returns
-  - The LLM response content or an error message
+  @doc \"""
+  Process a request with the LLM using a message set.
   """
   def process_request(client, remote, message_set, model, parameters \\ %{})
       when is_list(message_set) do
@@ -117,7 +98,6 @@ defmodule LLMService do
     validated_model = if remote, do: model, else: verify_model_existence(model)
 
     IO.inspect(validated_model, label: "Using Model")
-    # Merge default parameters with provided ones and encapsulate them in options map
     merged_params = %{options: Map.merge(@default_parameters, parameters)}
 
     IO.inspect(merged_params, label: "Merged Parameters")
@@ -161,15 +141,6 @@ defmodule LLMService do
 
   @doc """
   Send a simple query to the LLM and get a response.
-
-  ## Parameters
-  - query: The query text
-  - model: The model name to use
-  - system_prompt: Optional system prompt
-  - parameters: Optional map of parameters to override defaults
-
-  ## Returns
-  - The LLM response content or an error message
   """
   def query(query, model, remote_config, parameters \\ %{}, system_prompt \\ nil) do
     messages =
@@ -212,16 +183,8 @@ defmodule LLMService do
   @doc """
   Use a predefined prompt from a JSON prompt file to query the LLM.
 
-  ## Parameters
-  - prompt_file: Path to the JSON file containing prompts
-  - prompt_key: The key for the prompt in the prompts file
-  - variables: A map of variables to replace in the prompt template
-  - model: The model name to use
-  - system_prompt_key: Optional key for system prompt in the prompts file
-  - parameters: Optional map of parameters to override defaults
-
-  ## Returns
-  - The LLM response content or an error message
+  @doc \"""
+  Query the LLM using a prompt template from a JSON file.
   """
   def query_with_prompt(
         prompt_file,
@@ -365,18 +328,10 @@ defmodule LLMService do
 
   @doc """
   Parse LLM response into list items based on newline patterns.
-
-  ## Parameters
-  - response: The LLM response text
-
-  ## Returns
-  - A list of parsed items
   """
   def parse_response_to_list_items(response) when is_binary(response) do
-    # Split by newlines followed by an uppercase letter and dot or number and dot pattern
     items = Regex.split(~r/\n\s*(?=[A-Z]\.|[0-9]+\.)/, response, trim: true)
 
-    # Clean up each item and ensure they begin with a letter/number and period if they matched the pattern
     items
     |> Enum.map(&String.trim/1)
     |> Enum.map(fn item ->
@@ -393,13 +348,8 @@ defmodule LLMService do
   @doc """
   Constructs a prompt using a template and variables by delegating to PromptBuilder.
 
-  ## Parameters
-  - prompt_file: Path to the JSON file containing prompts
-  - template_key: The key for the template in the prompts file
-  - variables: A map of variables to replace in the template
-
-  ## Returns
-  - The formatted prompt or an error message
+  @doc \"""
+  Constructs a prompt using a template and variables from a JSON file.
   """
   def construct_prompt(prompt_file, template_key, variables \\ %{}) do
     PromptBuilder.construct_prompt(prompt_file, template_key, variables)
@@ -467,7 +417,6 @@ defmodule LLMService do
         PromptBuilder.count_words_and_tokens_mdb(records)
     end
   end
-
 
   # Make direct HTTP request to Ollama API
   defp make_direct_ollama_request(client, model, messages, options) do

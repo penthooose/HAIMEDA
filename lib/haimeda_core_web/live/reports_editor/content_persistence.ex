@@ -278,7 +278,6 @@ defmodule HaimedaCoreWeb.ReportsEditor.ContentPersistence do
     end
   end
 
-  # New function to verify formatted content integrity
   @doc """
   Verifies and repairs formatted content to ensure it has valid structure
   """
@@ -1125,7 +1124,6 @@ defmodule HaimedaCoreWeb.ReportsEditor.ContentPersistence do
     end
   end
 
-  # new private helper
   defp formatted_empty?(%{"content" => [%{"content" => [%{"text" => ""}]}]}), do: true
   defp formatted_empty?(_), do: false
 

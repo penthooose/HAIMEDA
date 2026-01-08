@@ -858,7 +858,6 @@ defmodule HaimedaCoreWeb.ReportsEditor.TipTapEditor do
             |> maybe_update_attr("currentText", Map.get(attrs, :replacement))
             |> maybe_update_attr("entityColor", Map.get(attrs, :color))
 
-          # --- new: always merge back the previous text into replacements ---
           existing_repls = Map.get(mark["attrs"], "replacements", [])
 
           if is_list(existing_repls) do
@@ -877,8 +876,6 @@ defmodule HaimedaCoreWeb.ReportsEditor.TipTapEditor do
 
             updated_attrs = Map.put(updated_attrs, "replacements", merged)
           end
-
-          # --- end new merge logic ---
 
           {Map.put(mark, "attrs", updated_attrs), true}
         else

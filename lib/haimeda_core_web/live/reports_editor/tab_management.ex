@@ -544,8 +544,6 @@ defmodule HaimedaCoreWeb.ReportsEditor.TabManagement do
     end
   end
 
-  # Helper functions
-
   defp get_next_chapter_number(nav_sections) do
     chapters_section = Enum.find(nav_sections, &(&1.id == "chapters"))
 
